@@ -1,0 +1,9 @@
+.data
+
+.vars
+
+.code
+load 4 a
+load 3 b
+add a b c
+sub a b d
