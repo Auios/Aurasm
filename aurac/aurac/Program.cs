@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace aurac
 {
@@ -6,12 +7,26 @@ namespace aurac
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Start");
-            foreach(string arg in args)
+            //Check if file name was passed
+            if (args.Length == 0)
             {
-                Console.WriteLine(arg);
+                Console.WriteLine("No file name passed!");
+                return;
             }
-            Console.WriteLine("End");
+
+            //Check if file exists
+            if (!File.Exists(args[0]))
+            {
+                Console.WriteLine("File not found!");
+                return;
+            }
+
+            string[] file = File.ReadAllLines(args[0]);
+            for(int i = 0; i < file.Length; i++)
+            {
+                Console.WriteLine(file[i]);
+            }
+
             Console.ReadKey();
         }
     }
