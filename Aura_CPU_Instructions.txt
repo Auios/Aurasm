@@ -1,0 +1,228 @@
+<===========================>
+<===== Project AuR_ASM =====>
+<===========================>
+| 16bit Architecture for a Virtual CPU Simulator
+| using the .Net v4.7 framework.
+|
+| Features include simple keyboard input and simple output
+| to a virtual screen.
+| Intended use is for educational purposes to explore,
+| learn, and understand: assembly language, assemblers,
+| machine code, how CPUs work, and why explorer.exe keeps crashing.
+
+
+<====================>
+<===== Notation =====>
+<====================>
+| REG	-	Value from register
+| ADR	-	Value from address in memory
+| VAL	-	Contant value
+
+
+<=====================>
+<===== Registers =====>
+<=====================>
+
+=== Register Addresses: (16 Registers) ===
+0	A
+1	B
+2	C
+3	D
+5	
+6	
+7	
+8	
+9	
+10	Base Pointer (BP)
+11	Stack Pointer (SP)
+12	Base Call Stack (BS)
+13	Call Stack (CS)
+14	Control Register (CR)
+15	Instruction Pointer (IP)
+
+=== Control Register Flag Bits ===
+0	Carry Flag (CF)
+1	Zero Flag (ZF)
+2	Test Flag (TF)
+3	Overflow Flag (OF)
+4	Sign Flag (SF)
+5	Interrupt Flag (IF)
+6	
+7	
+8	
+9	
+10	
+11	
+12	
+13	
+14	
+15	
+
+
+<===========================>
+<===== Instruction Codes ===>
+<===========================>
+| Using any instruction that doesn't have a function
+| will result in the program terminating
+
+=== MISC ===
+
+00	0	-	HALT
+01	1	-	
+02	2	-	
+03	3	-	
+04	4	-	
+05	5	-	
+06	6	-	
+07	7	-	
+08	8	-	
+09	9	-	
+0A	10	-	
+0B	11	-	
+0C	12	-	
+0D	13	-	
+0E	14	-	SYS REG
+0F	15	-	SYS VAL
+10	16	-	
+11	17	-	
+12	18	-	
+13	19	-	
+
+=== Logic ===
+| Modifies ZF
+
+14	20	-	AND REG, REG, REG
+15	21	-	AND	REG, VAL, REG
+16	22	-	AND VAL, REG, REG
+17	23	-	AND VAL, VAL, REG
+
+18	24	-	OR REG, REG, REG
+19	25	-	OR REG, VAL, REG
+1A	26	-	OR VAL, REG, REG
+1B	27	-	OR VAL, VAL, REG
+
+1C	28	-	XOR REG, REG, REG
+1D	29	-	XOR	REG, VAL, REG
+1E	30	-	XOR VAL, REG, REG
+1F	31	-	XOR VAL, VAL, REG
+
+20	32	-	NOT REG, REG
+
+=== Arithmetic ===
+| Modifies CF and ZF
+
+28	40	-	ADD REG, REG (Result goes into D)
+2A	42	-	SUB REG, REG (Result goes into D)
+2C	44	-	MUL REG, REG (Result goes into D, Overflow goes into C)
+2E	46	-	DIV	REG, REG (D = Quotient, C = Remainder)
+
+=== Memory ===
+
+32	50	-	INC REG
+33	51	-	DEC REG
+
+34	52	-	SHL	REG, REG (Result goes into left operand)
+35	53	-	SHL REG, VAL (Result goes into left operand)
+
+36	54	-	SHR	REG, REG (Result goes into left operand)
+37	55	-	SHR REG, VAL (Result goes into left operand)
+
+38	56	-	MOV REG, REG
+39	57	-	MOV VAL, REG
+
+3A	58	-	READ ADR, REG
+
+3B	59	-	WRITE REG, ADR
+3C	60	-	WRITE VAL, ADR
+
+3D	61	-	PUSH REG
+3E	62	-	POP REG
+
+=== Compare ===
+| Modifies TF
+
+46	70 - CMP REG = REG
+47	71 - CMP REG = VAL
+
+48	72 - CMP REG < REG
+49	73 - CMP REG < VAL
+
+4A	74 - CMP REG > REG
+4B	75 - CMP REG > VAL
+
+4C	76 - CMP REG <= REG
+4D	77 - CMP REG <= VAL
+
+4E	78 - CMP REG >= REG
+4F	79 - CMP REG >= VAL
+
+=== Jump ===
+
+50	80	-	JMP REG
+51	81	-	JMP ADR
+52	82	-	JMP VAL
+
+53	83	-	JT REG
+54	84	-	JT ADR
+55	85	-	JT VAL
+
+56	86	-	JF REG
+57	87	-	JF ADR
+58	88	-	JF VAL
+
+=== Call ===
+| Pushes current position + 1 onto the call stack before
+| jumping to specified address
+
+64	100	-	RET
+
+65	101	-	CALL REG
+66	102	-	CALL ADR
+67	103	-	CALL VAL
+
+
+<========================>
+<===== System Calls =====>
+<========================>
+| These are unique to the virtual machine project
+
+Hex	| --------- Name -------------- | - Registers ------------------------- +
+---	| ----------------------------- | -- A -- | -- B -- | -- C -- | -- D -- | 
+ 00	|  0	-	                    |         |         |         |         |
+ 0A	| 10	-	Enable/Disable Scrn |    Bool |         |         |         |
+ 0B	| 11	-	Reset Scrn          |    Bool |         |         |         |
+ 0C	| 12	-	Input               | KeyCode |         |         |         |
+ 1A	| 26	-	Set Pixel           |       X |       Y |    Bool |         |
+ 1B	| 27	-	Print Char          |       X |       Y |     ICS |         |
+
+
+<======================>
+<===== References =====>
+<======================>
+
+General Information
+	https://en.wikipedia.org/wiki/Assembly_language
+	http://boccelliengineering.altervista.org/junk/asm/assembly1.html
+	http://www.cs.virginia.edu/~evans/cs216/guides/x86.html
+
+Simple 8-bit Assembler Simulator
+	https://schweigi.github.io/assembler-simulator/
+	https://schweigi.github.io/assembler-simulator/instruction-set.html
+
+Registers
+	https://www.tutorialspoint.com/assembly_programming/assembly_registers.htm
+	https://en.wikipedia.org/wiki/Status_register
+	https://en.wikipedia.org/wiki/Control_register
+
+Syscalls
+	https://en.wikibooks.org/wiki/X86_Assembly/Interfacing_with_Linux
+	https://www.tutorialspoint.com/assembly_programming/assembly_system_calls.htm
+	https://syscalls.kernelgrok.com/
+	https://en.wikipedia.org/wiki/Write_(system_call)
+
+
+<=================>
+<===== Other =====>
+<=================>
+
+https://codeshare.io/aJy4QR

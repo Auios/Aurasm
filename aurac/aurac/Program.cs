@@ -7,6 +7,7 @@ namespace aurac
     {
         static void Main(string[] args)
         {
+            /*
             //Check if file name was passed
             if (args.Length == 0)
             {
@@ -26,8 +27,19 @@ namespace aurac
             {
                 Console.WriteLine(file[i]);
             }
+            */
+
+            Console.WriteLine($"'{CleanString("   MOV   A,   B   ;lol ok have you seen this?  ")}'");
 
             Console.ReadKey();
+        }
+
+        static string CleanString(string line)
+        {
+            return line.Substring(
+                    0,
+                    line.Length - (line.Length - line.IndexOf(';'))
+                ).Trim();
         }
     }
 }

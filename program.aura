@@ -1,9 +1,32 @@
-.data
+JMP start
 
-.vars
+val_a:
+	DW 300				;Declare word (1, 44)
+val_b:
+	DW 1000 			;Declare word (11, 232)
+val_result:
+	DW 0
 
-.code
-load 4 a
-load 3 b
-add a b c
-sub a b d
+handle_carry:
+	INC A 				;Increment A by one
+	RET
+
+start:
+	READ val_a + 1, A
+	READ val_b + 1, B
+
+	ADD A, B, C			;Carry flag will become high
+	WRITE C, val_result + 1
+	
+	READ val_a, A
+	READ val_b, B
+
+	AND CR, 1, D		;Check if Control Register's carry bit is 1
+	TEST D = 1			
+	JF no_carry
+	CALL handle_carry
+	no_carry:
+
+	ADD A, B, C
+	WRITE C, val_result
+	HALT
