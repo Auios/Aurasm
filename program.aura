@@ -15,18 +15,19 @@ start:
 	READ val_a + 1, A
 	READ val_b + 1, B
 
-	ADD A, B, C			;Carry flag will become high
-	WRITE C, val_result + 1
+	ADD A, B			;Carry flag will become high
+	WRITE D, val_result + 1
 	
 	READ val_a, A
 	READ val_b, B
 
-	AND CR, 1, D		;Check if Control Register's carry bit is 1
+	MOV 1, C
+	AND CR, C, D		;Check if Control Register's carry bit is 1
 	TEST D = 1			
 	JF no_carry
 	CALL handle_carry
 	no_carry:
 
-	ADD A, B, C
-	WRITE C, val_result
+	ADD A, B
+	WRITE D, val_result
 	HALT
