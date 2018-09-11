@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DB9A36A3-DAFD-429C-B6FA-3D145C38844F}</ProjectGuid>
+    <ProjectGuid>{58F3D528-8A56-4F15-B481-34B54CB1B1D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>aurac</RootNamespace>
-    <AssemblyName>aurac</AssemblyName>
+    <RootNamespace>AuraAssembler</RootNamespace>
+    <AssemblyName>AuraAssembler</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
