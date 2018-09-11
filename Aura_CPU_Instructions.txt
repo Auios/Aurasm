@@ -14,30 +14,30 @@
 <====================>
 <===== Notation =====>
 <====================>
-| <reg16> -	Any 16-bit register (A, B, C, D)
-| <reg_8> -	Any 8-bit register (AL, BL, CL, DL, AH, BH, CH, DH)
-| <con16> -	Any 16-bit constant
-| <con_8> - Any 8-bit constant
-| <memry> -	Value from address in memory
+| <reg> - Any register (r0 - r11)
+| <val> - Any 32bit constant value
+| <mem> - Any 32bit memory address
 
 <=====================>
 <===== Registers =====>
 <=====================>
+| Registers use 4bit addressing
 
 === Register Addresses: (16 Registers) ===
-0	A
-1	B
-2	C
-3	D
-5	
-6	
-7	
-8	
-9	
-10	Base Pointer (BP)
-11	Stack Pointer (SP)
-12	Base Call Stack (BS)
-13	Call Stack (CS)
+0	r0
+1	r1
+2	r2
+3	r3
+4	r4
+5	r5
+6	r6
+7	r7
+8	r8
+9	r9
+10	r10
+11	r11
+12	Base Pointer (BP)
+13	Stack Pointer (SP)
 14	Control Register (CR)
 15	Instruction Pointer (IP)
 
@@ -45,9 +45,9 @@
 0	Carry Flag (CF)
 1	Zero Flag (ZF)
 2	Test Flag (TF)
-3	Overflow Flag (OF)
-4	Sign Flag (SF)
-5	Interrupt Flag (IF)
+3	Sign Flag (SF)
+4	Interrupt Flag (IF)
+5	
 6	
 7	
 8	
@@ -64,7 +64,8 @@
 <===== Instruction Codes ===>
 <===========================>
 | Using any instruction that doesn't have a function
-| will result in the program terminating
+|  will result in the program terminating
+| Instruction set uses 8bit addressing
 
 === MISC ===
 
@@ -82,10 +83,10 @@
 11	-	
 12	-	
 13	-	
-14	-	SYS <reg16>
-15	-	SYS <con16>
-16	-	
-17	-	
+14	-	
+15	-	
+16	-	SYS <reg>
+17	-	SYS <val>
 18	-	
 19	-	
 20	-	
@@ -103,119 +104,114 @@
 
 === Logic ===
 | Modifies ZF
+| Returns result to left operand
 
-__	-	AND <reg16>, <reg16>, <reg16>
-__	-	AND <reg_8>, <reg_8>, <reg_8>
-__	-	AND <reg16>, <con16>, <reg16>
-__	-	AND <reg_8>, <con_8>, <reg_8>
-__	-	AND <con16>, <con16>, <reg16>
-__	-	AND <con_8>, <con_8>, <reg_8>
+32	-	AND <reg>, <reg>
+33	-	AND <reg>, <val>
 
-__	-	OR <reg16>, <reg16>, <reg16>
-__	-	OR <reg_8>, <reg_8>, <reg_8>
-__	-	OR <reg16>, <con16>, <reg16>
-__	-	OR <reg_8>, <con_8>, <reg_8>
-__	-	OR <con16>, <con16>, <reg16>
-__	-	OR <con_8>, <con_8>, <reg_8>
+34	-	OR <reg>, <reg>
+35	-	OR <reg>, <val>
 
-__	-	XOR <reg16>, <reg16>, <reg16>
-__	-	XOR <reg_8>, <reg_8>, <reg_8>
-__	-	XOR <reg16>, <con16>, <reg16>
-__	-	XOR <reg_8>, <con_8>, <reg_8>
-__	-	XOR <con16>, <con16>, <reg16>
-__	-	XOR <con_8>, <con_8>, <reg_8>
+36	-	XOR <reg>, <reg>
+37	-	XOR <reg>, <val>
 
-__	-	NOT <reg16>
-__	-	NOT <reg_8>
+38	-	NOT <reg>
 
 === Arithmetic ===
 | Modifies CF and ZF
+| Returns result to left operand
 
-40	-	ADD REG, REG (Result goes into D)
-42	-	SUB REG, REG (Result goes into D)
-44	-	MUL REG, REG (Result goes into D, Overflow goes into C)
-46	-	DIV	REG, REG (D = Quotient, C = Remainder)
+40	-	ADD <reg>, <reg>
+41	-	SUB <reg>, <reg>
+42	-	MUL <reg>, <reg>
+43	-	DIV	<reg>, <reg> (left = Quotient, right = Remainder)
 
 === Memory ===
 
-56	-	MOV REG, REG
-57	-	MOV VAL, REG
+48	-	MOV <reg>, <reg>
+49	-	MOV <reg>, <val>
 
-50	-	INC REG
-51	-	DEC REG
+50	-	INC <reg>
+51	-	DEC <reg>
 
-52	-	SHL	REG, REG (Result goes into left operand)
-53	-	SHL REG, VAL (Result goes into left operand)
+52	-	SHL <reg>
+53	-	SHL	<reg>, <reg> (Result goes into left operand)
+54	-	SHL <reg>, <val> (Result goes into left operand)
 
-54	-	SHR	REG, REG (Result goes into left operand)
-55	-	SHR REG, VAL (Result goes into left operand)
+55	-	SHR <reg>
+56	-	SHR	<reg>, <reg> (Result goes into left operand)
+57	-	SHR <reg>, <val> (Result goes into left operand)
 
+64	-	R8 <reg>, <mem>
+65	-	R16 <reg>, <mem>
+66	-	R32 <reg>, <mem>
 
+67	-	W8 <reg>, <mem>
+68	-	W16 <reg>, <mem>
+69	-	W32 <reg>, <mem>
 
-58	-	READ ADR, REG
-
-59	-	WRITE REG, ADR
-60	-	WRITE VAL, ADR
-
-61	-	PUSH REG
-62	-	POP REG
+70	-	PUSH <reg>
+71	-	POP <reg>
 
 === Compare ===
 | Modifies TF
 
-70 -	TEST REG = REG
-71 -	TEST REG = VAL
+80 -	TEST <reg> = <reg>
+81 -	TEST <reg> = <val>
 
-72 -	TEST REG < REG
-73 -	TEST REG < VAL
+82 -	TEST <reg> < <reg>
+83 -	TEST <reg> < <val>
 
-74 -	TEST REG > REG
-75 -	TEST REG > VAL
+84 -	TEST <reg> > <reg>
+85 -	TEST <reg> > <val>
 
-76 -	TEST REG <= REG
-77 -	TEST REG <= VAL
+86 -	TEST <reg> <= <reg>
+87 -	TEST <reg> <= <val>
 
-78 -	TEST REG >= REG
-79 -	TEST REG >= VAL
+88 -	TEST <reg> >= <reg
+89 -	TEST <reg> >= <val>
 
 === Jump ===
+| Checks TF
 
-80	-	JMP REG
-81	-	JMP ADR
-82	-	JMP VAL
+100	-	JMP <reg>
+101	-	JMP <mem>
+102	-	JMP <val>
 
-83	-	JT REG
-84	-	JT ADR
-85	-	JT VAL
+103	-	JT <reg>
+104	-	JT <mem>
+105	-	JT <val>
 
-86	-	JF REG
-87	-	JF ADR
-88	-	JF VAL
+106	-	JF <reg>
+107	-	JF <mem>
+108	-	JF <val>
 
 === Call ===
 | Pushes current position + 1 onto the call stack before
 | jumping to specified address
 
-100	-	RET
+128	-	RET
 
-101	-	CALL REG
-102	-	CALL ADR
-103	-	CALL VAL
+129	-	CALL <reg>
+130	-	CALL <mem>
+131	-	CALL <val>
 
 
 <========================>
 <===== System Calls =====>
 <========================>
-| These are unique to the virtual machine project
+| 
 
-Hex	| --------- Name -------------- | - Registers ------------------------- +
----	| ----------------------------- | -- A -- | -- B -- | -- C -- | -- D -- | 
- 00	|  0	-	                    |         |         |         |         |
- 0A	| 10	-	Enable/Disable Scrn |    Bool |         |         |         |
- 0B	| 11	-	Reset Scrn          |    Bool |         |         |         |
- 0C	| 12	-	Input               | KeyCode |         |         |         |
- 1A	| 26	-	Set Pixel           |       X |       Y |    Bool |         |
- 1B	| 27	-	Print Char          |       X |       Y |     ICS |         |
+Hex	| --------- Name -------------- | - Registers ----------------------------- +
+---	| ----------------------------- | -- r0 -- | -- r1 -- | -- r2 -- | -- r3 -- | 
+ __	|  0	-	                    |          |          |          |          | (Nothing)
+ __	| 10	-	Enable/Disable Scrn |     Bool |          |          |          | (Turns the screen on/off)
+ __	| 11	-	Clear Screen        |          |          |          |          | (Resets the screen to blank state)
+ __	| 12	-	Read input          |  KeyCode |          |          |          | (Reads a byte from the input buffer)
+ __	| 32	-	Set Pixel           |        X |        Y |  ColorID |          | (Sets pixel at X,Y to whatever the color code value is in r2)
+ __	| 33	-	Get Pixel Color     |        X |        Y |  ColorID |          | (Returns pixel color at X,Y to r2)
+ __	| 36	-	SetPrint Char       |        X |        Y |  PrintID |          | (Blockland Only)
+ __	| 37	-	GetPrint Char       |        X |        Y |  PrintID |          | (Blockland Only)
 
 
 <======================>
@@ -247,4 +243,4 @@ Syscalls
 <===== Other =====>
 <=================>
 
-https://codeshare.io/aJy4QR
+https://codeshare.io/2W8Nvy
