@@ -168,7 +168,7 @@
 86 -	TEST <reg> <= <reg>
 87 -	TEST <reg> <= <val>
 
-88 -	TEST <reg> >= <reg
+88 -	TEST <reg> >= <reg>
 89 -	TEST <reg> >= <val>
 
 === Jump ===
