@@ -5,3 +5,4 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:AuraAssembler.Program.SetupInstructionHashTable")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:AuraAssembler.Program.Init")]
