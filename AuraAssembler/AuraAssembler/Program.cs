@@ -23,41 +23,41 @@ namespace AuraAssembler
         {
             labels = new List<Label>();
             instruction = new Hashtable();
-            instruction.Add("HALT", 0); // 
-            instruction.Add("SYS0", 16); // <reg>
-            instruction.Add("SYS1", 17); // <val>
+            instruction.Add("HALT", new Instruction("HALT")); // 
+            instruction.Add("SYS0", new Instruction("SYS", 1)); // <reg>
+            instruction.Add("SYS1", new Instruction("SYS", 1)); // <val>
 
-            instruction.Add("AND0", 32); // <reg>, <reg>
-            instruction.Add("AND1", 33); // <reg>, <val>
-            instruction.Add("OR0", 34); // <reg>, <reg>
-            instruction.Add("OR1", 35); // <reg>, <val>
-            instruction.Add("XOR0", 36); // <reg>, <reg>
-            instruction.Add("XOR1", 37); // <reg>, <val>
-            instruction.Add("NOT", 38); // <reg>
+            instruction.Add("AND0", new Instruction("ADD", 1, 1)); // <reg>, <reg>
+            instruction.Add("AND1", new Instruction("ADD", 1, 4)); // <reg>, <val>
+            instruction.Add("OR0", new Instruction("OR", 1, 1)); // <reg>, <reg>
+            instruction.Add("OR1", new Instruction("OR", 1, 4)); // <reg>, <val>
+            instruction.Add("XOR0", new Instruction("XOR", 1, 1)); // <reg>, <reg>
+            instruction.Add("XOR1", new Instruction("XOR", 1, 4)); // <reg>, <val>
+            instruction.Add("NOT", new Instruction("NOT", 1)); // <reg>
 
-            instruction.Add("ADD", 40); // <reg>, <reg>
-            instruction.Add("SUB", 41); // <reg>, <reg>
-            instruction.Add("MUL", 42); // <reg>, <reg>
-            instruction.Add("DIV", 43); // <reg>, <reg>
+            instruction.Add("ADD", new Instruction("ADD", 1, 1)); // <reg>, <reg>
+            instruction.Add("SUB", new Instruction("SUB", 1, 1)); // <reg>, <reg>
+            instruction.Add("MUL", new Instruction("MUL", 1, 1)); // <reg>, <reg>
+            instruction.Add("DIV", new Instruction("DIV", 1, 1)); // <reg>, <reg>
 
-            instruction.Add("MOV0", 48); // <reg>, <reg>
-            instruction.Add("MOV1", 49); // <reg>, <val>
-            instruction.Add("INC", 50); // <reg>
-            instruction.Add("DEC", 51); // <reg>
-            instruction.Add("SHL0", 52); // <reg>
-            instruction.Add("SHL1", 53); // <reg>, <reg> (Result goes into left operand)
-            instruction.Add("SHL2", 54); // <reg>, <val> (Result goes into left operand)
-            instruction.Add("SHR0", 55); // <reg>
-            instruction.Add("SHR1", 56); // <reg>, <reg> (Result goes into left operand)
-            instruction.Add("SHR2", 57); // <reg>, <val> (Result goes into left operand)
-            instruction.Add("R8", 64); // <reg>, <mem>
-            instruction.Add("R16", 65); // <reg>, <mem>
-            instruction.Add("R32", 66); // <reg>, <mem>
-            instruction.Add("W8", 67); // <reg>, <mem>
-            instruction.Add("W16", 68); // <reg>, <mem>
-            instruction.Add("W32", 69); // <reg>, <mem>
-            instruction.Add("PUSH", 70); // <reg>
-            instruction.Add("POP", 71); // <reg>
+            instruction.Add("MOV0", new Instruction("MOV", 1, 1)); // <reg>, <reg>
+            instruction.Add("MOV1", new Instruction("MOV", 1, 4)); // <reg>, <val>
+            instruction.Add("INC", new Instruction("INC", 1)); // <reg>
+            instruction.Add("DEC", new Instruction("DEC", 1)); // <reg>
+            instruction.Add("SHL0", new Instruction("SHL", 1)); // <reg>
+            instruction.Add("SHL1", new Instruction("SHL", 1, 1)); // <reg>, <reg> (Result goes into left operand)
+            instruction.Add("SHL2", new Instruction("SHL", 1, 4)); // <reg>, <val> (Result goes into left operand)
+            instruction.Add("SHR0", new Instruction("SHR", 1)); // <reg>
+            instruction.Add("SHR1", new Instruction("SHR", 1, 1)); // <reg>, <reg> (Result goes into left operand)
+            instruction.Add("SHR2", new Instruction("SHR", 1, 4)); // <reg>, <val> (Result goes into left operand)
+            instruction.Add("R8", new Instruction("R8", 1, 4)); // <reg>, <mem>
+            instruction.Add("R16", new Instruction("R16", 1, 4)); // <reg>, <mem>
+            instruction.Add("R32", new Instruction("R32", 1, 4)); // <reg>, <mem>
+            instruction.Add("W8", new Instruction("W8", 1, 4)); // <reg>, <mem>
+            instruction.Add("W16", new Instruction("W16", 1, 4)); // <reg>, <mem>
+            instruction.Add("W32", new Instruction("W32", 1, 4)); // <reg>, <mem>
+            instruction.Add("PUSH", new Instruction("PUSH", 1)); // <reg>
+            instruction.Add("POP", new Instruction("POP", 1)); // <reg>
 
             instruction.Add("TEST0", 80); // <reg> = <reg>
             instruction.Add("TEST1", 81); // <reg> = <val>
@@ -93,6 +93,7 @@ namespace AuraAssembler
                 line = line.Trim();
                 string[] tokens = line.Split(' ');
                 string cmd = tokens[0];
+                
 
                 foreach (string token in tokens)
                 {
