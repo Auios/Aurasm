@@ -142,13 +142,13 @@
 56	-	SHR	<reg>, <reg> (Result goes into left operand)
 57	-	SHR <reg>, <val> (Result goes into left operand)
 
-64	-	R8 <reg>, <mem>
-65	-	R16 <reg>, <mem>
-66	-	R32 <reg>, <mem>
+64	-	RB <reg>, <mem> (Read byte)
+65	-	RS <reg>, <mem> (Read short)
+66	-	RL <reg>, <mem> (Read long)
 
-67	-	W8 <reg>, <mem>
-68	-	W16 <reg>, <mem>
-69	-	W32 <reg>, <mem>
+67	-	WB <reg>, <mem> (Read byte)
+68	-	WS <reg>, <mem> (Read short)
+69	-	WL <reg>, <mem> (Read long)
 
 70	-	PUSH <reg>
 71	-	POP <reg>
