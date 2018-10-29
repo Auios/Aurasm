@@ -9,14 +9,23 @@ namespace AuraAssembler
     class Instruction
     {
         string name;
-        uint parameters;
-        uint size;
+        uint p1Size, p2Size;
 
-        public Instruction(string name, uint parameters, uint size)
+        public Instruction(string name, uint p1Size = 0, uint p2Size = 0)
         {
             this.name = name;
-            this.parameters = parameters;
-            this.size = size;
+            this.p1Size = p1Size;
+            this.p2Size = p2Size;
+        }
+
+        public string GetName()
+        {
+            return name;
+        }
+
+        public uint GetSize()
+        {
+            return 1 + p1Size + p2Size;
         }
     }
 }
