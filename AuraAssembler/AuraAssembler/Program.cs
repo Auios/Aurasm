@@ -14,7 +14,7 @@ namespace AuraAssembler
         {
             Init();
 
-            Parse("JMP start");
+            Parse("MOV r1,aaa");
 
             Console.ReadKey();
         }
@@ -92,13 +92,37 @@ namespace AuraAssembler
             if(line.Length > 0)
             {
                 line = line.Trim();
-                string[] tokens = line.Split(' ');
+                string[] tokens = line.Split(' ', ',');
                 string cmd = tokens[0];
-                
 
-                foreach (string token in tokens)
+                Console.WriteLine($"Instruction: '{tokens[0]}'");
+                for (int i = 1; i < tokens.Length; i++)
                 {
-                    Console.WriteLine($"'{token}'");
+                    string token = tokens[i];
+
+                    if(token.Length > 0)
+                    {
+                        if(token[0] == 'r')
+                        {
+                            Console.WriteLine($"Register: '{token}'");
+                        }
+                        else if(token[0] == '@')
+                        {
+                            Console.WriteLine($"Address: '{token}'");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                uint value = UInt32.Parse(token);
+                                Console.WriteLine($"Value: '{value}'");
+                            }
+                            catch(Exception e)
+                            {
+                                Console.WriteLine($"Did not recognize {token}");
+                            }
+                        }
+                    }
                 }
             }
         }
