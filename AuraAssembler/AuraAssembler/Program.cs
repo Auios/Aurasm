@@ -8,20 +8,20 @@ namespace AuraAssembler
     {
         static UInt32 curAdr; // Current address
         static Hashtable instruction;
-        static List<Label> labels;
+        static Hashtable labels;
 
         static void Main(string[] args)
         {
             Init();
 
-            Parse("MOV r1,aaa");
+            Parse("MOV r1, @4");
 
             Console.ReadKey();
         }
 
         static void Init()
         {
-            labels = new List<Label>();
+            labels = new Hashtable();
             instruction = new Hashtable();
 
             instruction.Add("HALT", new Instruction(0, "HALT")); // 
@@ -110,6 +110,10 @@ namespace AuraAssembler
                         {
                             Console.WriteLine($"Address: '{token}'");
                         }
+                        else if(labels[token] != null)
+                        {
+
+                        }
                         else
                         {
                             try
@@ -117,9 +121,9 @@ namespace AuraAssembler
                                 uint value = UInt32.Parse(token);
                                 Console.WriteLine($"Value: '{value}'");
                             }
-                            catch(Exception e)
+                            catch
                             {
-                                Console.WriteLine($"Did not recognize {token}");
+                                Console.WriteLine($"'{token}' not recognized");
                             }
                         }
                     }
