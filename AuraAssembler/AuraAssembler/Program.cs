@@ -8,21 +8,24 @@ namespace AuraAssembler
     {
         static UInt32 curAdr; // Current address
         static Hashtable instruction;
+        static Hashtable register;
         static Hashtable labels;
 
         static void Main(string[] args)
         {
             Init();
 
-            Parse("MOV r1, @4");
+            Parse("ok:");
+            Parse("MOV r1, ok");
 
             Console.ReadKey();
         }
 
         static void Init()
         {
-            labels = new Hashtable();
             instruction = new Hashtable();
+            register = new Hashtable();
+            labels = new Hashtable();
 
             instruction.Add("HALT", new Instruction(0, "HALT")); // 
             instruction.Add("SYS0", new Instruction(16, "SYS", 1)); // <reg>
@@ -85,6 +88,24 @@ namespace AuraAssembler
             instruction.Add("CALL0", new Instruction(129, "CALL", 1)); // <reg>
             instruction.Add("CALL1", new Instruction(130, "CALL", 4)); // <mem>
             instruction.Add("CALL2", new Instruction(131, "CALL", 4)); // <val>
+
+            uint ii = 0;
+            register["r0"] = ii++;
+            register["r1"] = ii++;
+            register["r2"] = ii++;
+            register["r3"] = ii++;
+            register["r4"] = ii++;
+            register["r5"] = ii++;
+            register["r6"] = ii++;
+            register["r7"] = ii++;
+            register["r8"] = ii++;
+            register["r9"] = ii++;
+            register["r10"] = ii++;
+            register["r11"] = ii++;
+            register["BP"] = ii++;
+            register["SP"] = ii++;
+            register["CR"] = ii++;
+            register["IP"] = ii++;
         }
 
         static void Parse(string line)
@@ -95,37 +116,77 @@ namespace AuraAssembler
                 string[] tokens = line.Split(' ', ',');
                 string cmd = tokens[0];
 
-                Console.WriteLine($"Instruction: '{tokens[0]}'");
+                if(tokens[0].EndsWith(":"))
+                {
+                    string labelName = tokens[0].TrimEnd(':');
+                    Console.WriteLine($"Label: '{labelName}'");
+                    labels[labelName] = 0;
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine($"Instruction: '{tokens[0]}'");
+                }
+
                 for (int i = 1; i < tokens.Length; i++)
                 {
                     string token = tokens[i];
 
-                    if(token.Length > 0)
-                    {
-                        if(token[0] == 'r')
-                        {
-                            Console.WriteLine($"Register: '{token}'");
-                        }
-                        else if(token[0] == '@')
-                        {
-                            Console.WriteLine($"Address: '{token}'");
-                        }
-                        else if(labels[token] != null)
-                        {
+                    if (token.Length <= 0)
+                        continue;
 
-                        }
-                        else
-                        {
-                            try
-                            {
-                                uint value = UInt32.Parse(token);
-                                Console.WriteLine($"Value: '{value}'");
-                            }
-                            catch
-                            {
-                                Console.WriteLine($"'{token}' not recognized");
-                            }
-                        }
+                    // Register check
+                    if (token[0] == 'r')
+                    {
+                        Console.WriteLine($"Register: '{token}'");
+                        continue;
+                    }
+
+                    // Address check
+                    if (token[0] == '@')
+                    {
+                        Console.WriteLine($"Address: '{token}'");
+                        continue;
+                    }
+
+                    // Label check
+                    string lToken = token.TrimEnd(':');
+                    if (labels[lToken] != null)
+                    {
+                        Console.WriteLine($"Label: '{labels[lToken]}'");
+                        continue;
+                    }
+
+                    // Other register check
+                    switch (token)
+                    {
+                        case "BP":
+                            Console.WriteLine($"Base Pointer: '{token}'");
+                            continue;
+                        case "SP":
+                            Console.WriteLine($"Stack Pointer: '{token}'");
+                            continue;
+                        case "CR":
+                            Console.WriteLine($"Control Register: '{token}'");
+                            continue;
+                        case "IP":
+                            Console.WriteLine($"Instruction Pointer: '{token}'");
+                            continue;
+                        default:
+                            break;
+                    }
+
+                    // Number check
+                    try
+                    {
+                        uint value = uint.Parse(token);
+                        Console.WriteLine($"Value: '{value}'");
+                        continue;
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"'{token}' not recognized");
+                        continue;
                     }
                 }
             }
