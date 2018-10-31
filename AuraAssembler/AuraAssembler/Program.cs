@@ -13,9 +13,9 @@ namespace AuraAssembler
         static void Main(string[] args)
         {
             Init();
-
-            Parse("JMP start");
-
+            string str = Console.ReadLine();
+            Parse(str);
+            Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
 
@@ -70,7 +70,7 @@ namespace AuraAssembler
             instruction.Add("TEST7", 87); // <reg> <= <val>
             instruction.Add("TEST8", 88); // <reg> >= <reg>
             instruction.Add("TEST9", 89); // <reg> >= <val>
-            //System direction
+            //Ip jump direction
             instruction.Add("JMP0", 100); // <reg>
             instruction.Add("JMP1", 101); // <mem>
             instruction.Add("JMP2", 102); // <val>
@@ -80,7 +80,7 @@ namespace AuraAssembler
             instruction.Add("JF0", 106); // <reg>
             instruction.Add("JF1", 107); // <mem>
             instruction.Add("JF2", 108); // <val>
-            
+            //Ip direction
             instruction.Add("RET", 128); // 
             instruction.Add("CALL0", 129); // <reg>
             instruction.Add("CALL1", 130); // <mem>
@@ -97,7 +97,7 @@ namespace AuraAssembler
 
                 foreach (string token in tokens)
                 {
-                    Console.WriteLine($"'{token}'");
+                    Console.WriteLine($"'"+instruction[token] +"'");
                 }
             }
         }
