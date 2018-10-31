@@ -23,10 +23,11 @@ namespace AuraAssembler
         {
             labels = new List<Label>();
             instruction = new Hashtable();
+            //System
             instruction.Add("HALT", 0); // 
             instruction.Add("SYS0", 16); // <reg>
             instruction.Add("SYS1", 17); // <val>
-
+            //Logic
             instruction.Add("AND0", 32); // <reg>, <reg>
             instruction.Add("AND1", 33); // <reg>, <val>
             instruction.Add("OR0", 34); // <reg>, <reg>
@@ -34,12 +35,12 @@ namespace AuraAssembler
             instruction.Add("XOR0", 36); // <reg>, <reg>
             instruction.Add("XOR1", 37); // <reg>, <val>
             instruction.Add("NOT", 38); // <reg>
-
+            //Math
             instruction.Add("ADD", 40); // <reg>, <reg>
             instruction.Add("SUB", 41); // <reg>, <reg>
             instruction.Add("MUL", 42); // <reg>, <reg>
             instruction.Add("DIV", 43); // <reg>, <reg>
-
+            //Location
             instruction.Add("MOV0", 48); // <reg>, <reg>
             instruction.Add("MOV1", 49); // <reg>, <val>
             instruction.Add("INC", 50); // <reg>
@@ -58,7 +59,7 @@ namespace AuraAssembler
             instruction.Add("W32", 69); // <reg>, <mem>
             instruction.Add("PUSH", 70); // <reg>
             instruction.Add("POP", 71); // <reg>
-
+            //Tests
             instruction.Add("TEST0", 80); // <reg> = <reg>
             instruction.Add("TEST1", 81); // <reg> = <val>
             instruction.Add("TEST2", 82); // <reg> < <reg>
@@ -69,7 +70,7 @@ namespace AuraAssembler
             instruction.Add("TEST7", 87); // <reg> <= <val>
             instruction.Add("TEST8", 88); // <reg> >= <reg>
             instruction.Add("TEST9", 89); // <reg> >= <val>
-
+            //System direction
             instruction.Add("JMP0", 100); // <reg>
             instruction.Add("JMP1", 101); // <mem>
             instruction.Add("JMP2", 102); // <val>
@@ -79,7 +80,7 @@ namespace AuraAssembler
             instruction.Add("JF0", 106); // <reg>
             instruction.Add("JF1", 107); // <mem>
             instruction.Add("JF2", 108); // <val>
-
+            
             instruction.Add("RET", 128); // 
             instruction.Add("CALL0", 129); // <reg>
             instruction.Add("CALL1", 130); // <mem>
