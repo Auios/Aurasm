@@ -70,7 +70,7 @@ namespace AuraAssembler
             instruction.Add("TEST7", 87); // <reg> <= <val>
             instruction.Add("TEST8", 88); // <reg> >= <reg>
             instruction.Add("TEST9", 89); // <reg> >= <val>
-            //System direction
+            //Ip Direction jumps
             instruction.Add("JMP0", 100); // <reg>
             instruction.Add("JMP1", 101); // <mem>
             instruction.Add("JMP2", 102); // <val>
@@ -80,7 +80,7 @@ namespace AuraAssembler
             instruction.Add("JF0", 106); // <reg>
             instruction.Add("JF1", 107); // <mem>
             instruction.Add("JF2", 108); // <val>
-            
+            //Ip Direction
             instruction.Add("RET", 128); // 
             instruction.Add("CALL0", 129); // <reg>
             instruction.Add("CALL1", 130); // <mem>
