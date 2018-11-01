@@ -13,8 +13,9 @@ namespace AuraAssembler
         static void Main(string[] args)
         {
             Init();
-            string str = Console.ReadLine();
-            Parse(str);
+            //string str = Console.ReadLine();
+            //Parse(str);
+            test();
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
@@ -100,6 +101,31 @@ namespace AuraAssembler
                     Console.WriteLine($"'"+instruction[token] +"'");
                 }
             }
+        }
+
+        static bool test()
+        {
+            string ss = "";
+
+            bool rc=true;
+            int count=0;
+            for (int s=0; s< instruction.Count; s++) {
+
+                //ss ="."+instruction[s];
+
+                if (ss != "."+ instruction[s])
+                {
+                    rc = false;
+                    Console.WriteLine("Error for " + ss + "Check code");
+                }
+                else {
+                    count++;
+                    
+                }
+            }
+                Console.WriteLine(count +"/55 Test Passed");
+         
+            return rc;
         }
     }
 }
