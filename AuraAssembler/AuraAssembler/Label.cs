@@ -10,5 +10,15 @@
             this.name = name;
             this.address = address;
         }
+
+        public string GetName()
+        {
+            return name;
+        }
+
+        public uint GetAddress()
+        {
+            return address;
+        }
     }
 }
